@@ -47,6 +47,12 @@ const translations = {
 }
 ```
 
+Now you can use the global translate function inside your templates:
+
+```html
+<button>{{ $t('auth.btn.login') }}</button>
+```
+
 ### Updating the language
 
 To update the current language, import loqly and use it inside your set up like so:
@@ -68,10 +74,6 @@ If loqly is setup in your main.js, you can use the translate function instead of
 import { translate } from '@loqly/vue'
 
 const btnText = translate('auth.btn.login')
-```
-
-```html
-<button>{{ $t('auth.btn.login') }}</button>
 ```
 
 ### Using loqly in custom functionality

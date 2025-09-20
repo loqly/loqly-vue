@@ -1,6 +1,6 @@
 {
   "name": "@loqly/vue",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "The loqly Vue package helps you using the loqly platform for internationalization and copy management.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -13,7 +13,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js"
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.es.js"
     }
   },
   "sideEffects": false,
@@ -36,20 +37,19 @@
     "internationalization",
     "i18n",
     "localization",
-    "l10n"
+    "l10n",
+    "vue"
   ],
   "peerDependencies": {
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@loqly/web": "^0.1.9",
-    "vue": "^3.0.0"
+    "@loqly/web": "^0.1.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
-    "@babel/preset-react": "^7.27.1",
     "@vitejs/plugin-vue": "^5.2.4",
     "vite": "^6.3.6"
   }
