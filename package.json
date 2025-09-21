@@ -1,6 +1,6 @@
 {
   "name": "@loqly/vue",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "The loqly Vue package helps you using the loqly platform for internationalization and copy management.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",

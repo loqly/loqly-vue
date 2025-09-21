@@ -20,19 +20,25 @@ Include via script tag
 
 ## Setup
 
-In your main.js, import **LoqlyVue** and use it in your app.
+In your main.js, import LoqlyVue and register it as a plugin:
 
 ```js
+import { createApp } from 'vue'
+import App from './App.vue'
 import LoqlyVue from '@loqly/vue'
+
+const app = createApp(App)
 
 app.use(LoqlyVue, {
   apiKey: 'your-loqly-api-key',
   defaultLocale: 'en', // Optional, default is 'en'
-  func: '$t', // Optional, default is '$t'
+  func: '$t', // Optional, name of global translate function, default is '$t'
 })
+
+app.mount('#app')
 ```
 
-If you pass a translation object to the options, loqly will NOT fetch translations. Ensure that your translations are structured as follows:
+If you pass a translations object to the plugin, loqly will not fetch translations remotely. Your translations should be structured like this:
 
 ```js
 const translations = {
@@ -47,28 +53,42 @@ const translations = {
 }
 ```
 
-Now you can use the global translate function inside your templates:
+## Usage
+
+### Translating text
+
+After registering the plugin, a global translation function (default: $t) will be available in all templates:
 
 ```html
 <button>{{ $t('auth.btn.login') }}</button>
 ```
 
-### Updating the language
+If you configured for example func: 't', you would instead write:
 
-To update the current language, import loqly and use it inside your set up like so:
-
-```js
-import { useLoqly } from '@loqly/vue'
-
-const loqly = useLoqly()
-const updateLanguage = () => {
-  loqly.updateLanguage('de')
-}
+```html
+<button>{{ t('auth.btn.login') }}</button>
 ```
 
-### Manually translating elements
+### Updating the language
 
-If loqly is setup in your main.js, you can use the translate function instead of the global $t or t:
+To change the current language dynamically, use the useLoqly composable inside your components:
+
+```vue
+<script setup>
+import { useLoqly } from '@loqly/vue'
+
+const { updateLanguage } = useLoqly()
+</script>
+
+<template>
+  <button @click="updateLanguage('de')">Switch to German</button>
+  <button @click="updateLanguage('en')">Switch to English</button>
+</template>
+```
+
+### Translating programmatically
+
+If you prefer, you can call the translate function directly instead of using the global $t:
 
 ```js
 import { translate } from '@loqly/vue'
@@ -78,7 +98,7 @@ const btnText = translate('auth.btn.login')
 
 ### Using loqly in custom functionality
 
-You can implement loqly into your existing system and just fetch your translations. No need to init loqly then.
+You can also fetch translations directly, without initializing the plugin:
 
 ```js
 import { getTranslations } from '@loqly/vue'
