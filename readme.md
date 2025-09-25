@@ -25,12 +25,13 @@ In your main.js, import LoqlyVue and register it as a plugin:
 ```js
 import { createApp } from 'vue'
 import App from './App.vue'
-import LoqlyVue from '@loqly/vue'
+import LoqlyVue, { getTranslations } from '@loqly/vue'
 
 const app = createApp(App)
 
+const translations = await getTranslations('your-loqly-api-key')
 app.use(LoqlyVue, {
-  apiKey: 'your-loqly-api-key',
+  translations: translations,
   defaultLocale: 'en', // Optional, default is 'en'
   func: '$t', // Optional, name of global translate function, default is '$t'
 })

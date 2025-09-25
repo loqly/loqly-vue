@@ -1,4 +1,4 @@
-import { reactive as c, getCurrentInstance as h, ref as u } from "vue";
+import { reactive as i, getCurrentInstance as c, ref as h } from "vue";
 const r = async (s) => {
   if (!s) throw new Error("API key is required");
   const t = window.location.href.includes("http://localhost") ? "http://localhost:3000" : "https://api.loqly.dev", a = await fetch(`${t}/v1/strings`, {
@@ -12,7 +12,7 @@ const r = async (s) => {
     throw new Error(e.error || "Something went wrong, please try again.");
   return e.strings ? e.strings : {};
 };
-class i {
+class u {
   constructor({ apiKey: t, defaultLocale: a = "en" }) {
     this.apiKey = t, this._defaultLocale = a, this._locale = a, this._translations = null, this._translatableElements = [];
   }
@@ -70,29 +70,27 @@ class i {
     this._defaultLocale = t;
   }
 }
-const n = c({
+const n = i({
   locale: "en",
   translations: {}
 }), g = (s) => {
   var a, e;
-  return u(((e = (a = n.translations) == null ? void 0 : a[s]) == null ? void 0 : e[n.locale]) ?? s).value;
-}, p = () => {
-  const s = h();
+  return h(((e = (a = n.translations) == null ? void 0 : a[s]) == null ? void 0 : e[n.locale]) ?? s).value;
+}, _ = () => {
+  const s = c();
   return {
     updateLanguage: (a) => {
       n.locale = a, s.proxy.$forceUpdate();
     }
   };
-}, _ = {
-  install: (s, { apiKey: t = "", translations: a = {}, defaultLocale: e = "en", func: l = "$t" } = {}) => {
-    t ? i.getTranslations(t).then((o) => {
-      n.translations = o;
-    }) : a && (n.translations = a), e && (n.locale = e), s.config.globalProperties[l] = g;
+}, f = {
+  install: (s, { translations: t = {}, defaultLocale: a = "en", func: e = "$t" } = {}) => {
+    n.translations = t, a && (n.locale = a), s.config.globalProperties[e] = g;
   }
-}, m = i.getTranslations;
+}, m = u.getTranslations;
 export {
-  _ as default,
+  f as default,
   m as getTranslations,
   g as translate,
-  p as useLoqly
+  _ as useLoqly
 };

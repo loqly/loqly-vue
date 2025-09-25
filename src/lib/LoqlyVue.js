@@ -27,16 +27,9 @@ export const useLoqly = () => {
 export default {
   install: (
     app,
-    { apiKey = '', translations = {}, defaultLocale = 'en', func = '$t' } = {}
+    { translations = {}, defaultLocale = 'en', func = '$t' } = {}
   ) => {
-    if (apiKey) {
-      Loqly.getTranslations(apiKey).then((res) => {
-        state.translations = res
-      })
-    } else if (translations) {
-      state.translations = translations
-    }
-
+    state.translations = translations
     if (defaultLocale) state.locale = defaultLocale
 
     app.config.globalProperties[func] = translate
