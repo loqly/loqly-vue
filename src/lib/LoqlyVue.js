@@ -1,14 +1,24 @@
-import Loqly from '@loqly/web'
 import { ref, reactive, getCurrentInstance } from 'vue'
+import Loqly from '@loqly/web'
 
 const state = reactive({
   locale: 'en',
+  defaultLocale: 'en',
   translations: {},
 })
 
-export const translate = (key) => {
-  const translation = ref(state.translations?.[key]?.[state.locale] ?? key)
-  return translation.value
+export const translate = (key, payload = null) => {
+  const translation = ref(state.translations?.[key]?.[state.locale])
+  if (translation.value)
+    return Loqly.interpolateTranslation(translation.value, payload)
+
+  const fallbackTranslation = ref(
+    state.translations?.[key]?.[state.defaultLocale]
+  )
+  if (fallbackTranslation.value)
+    return Loqly.interpolateTranslation(translation.value, payload)
+
+  return Loqly.interpolateTranslation(key, payload)
 }
 
 export const useLoqly = () => {
@@ -30,7 +40,8 @@ export default {
     { translations = {}, defaultLocale = 'en', func = '$t' } = {}
   ) => {
     state.translations = translations
-    if (defaultLocale) state.locale = defaultLocale
+    state.locale = defaultLocale
+    state.locale = defaultLocale
 
     app.config.globalProperties[func] = translate
   },
